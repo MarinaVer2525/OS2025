@@ -1,0 +1,62 @@
+Процессы в ОС GNU/Linux
+Каждый процесс имеет свой собственный идентификатор.
+Получить значение идентификатора процесса возвращается системным вызовом getpid()
+Идентификатор родительского процесса возвращается системным вызовом getppid()
+
+Программа, выводящая на экран идентификаторы текущего и родительского процессов:
+
+#include <stdio.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <stdlib.h>
+int main() {
+        pid_t prid, parentprid;
+        prid = getpid();
+        parentprid = getppid();
+        printf("Ид. текущего поцесса: %d\nид. родительского процесса: %d\n", prid, parentprid);
+        return 0;
+}
+
+verchik@alexandr-Aspire-Z5751:~/OS_25$ ps
+    PID TTY          TIME CMD
+  11739 pts/1    00:00:00 bash
+  13765 pts/1    00:00:00 ps
+verchik@alexandr-Aspire-Z5751:~/OS_25$ vim pr003.c
+verchik@alexandr-Aspire-Z5751:~/OS_25$ gcc pr003.c -o pr00
+pr003.c:5:10: fatal error: stdib.h: Нет такого файла или каталога
+    5 | #include <stdib.h>
+      |          ^~~~~~~~~
+compilation terminated.
+verchik@alexandr-Aspire-Z5751:~/OS_25$ vim pr003.c
+verchik@alexandr-Aspire-Z5751:~/OS_25$ gcc pr003.c -o pr00
+pr003.c: In function ‘main’:
+pr003.c:10:77: warning: unknown escape sequence: '\320'
+   10 | <U+0440><U+043E><U+0446><U+0435><U+0441><U+0441><U+0430>: %d\n", prid< parentprid);
+      |                                                                ^
+
+pr003.c:10:73: warning: format ‘%d’ expects a matching ‘int’ argument [-Wformat=]
+   10 | rintf("Ид. текущего процесса: %d\пид. родительского процесса: %d\n", prid< parentprid);
+      |                                                               ~^
+      |                                                                |
+      |                                                                int
+
+verchik@alexandr-Aspire-Z5751:~/OS_25$ vim pr003.c
+verchik@alexandr-Aspire-Z5751:~/OS_25$ verchik@alexandr-Aspire-Z5751:~/OS_25$ vim pgcc pr003.c -o pr003.out
+pr003.c: In function ‘main’:
+pr003.c:10:76: warning: unknown escape sequence: '\320'
+   10 | <U+0440><U+043E><U+0446><U+0435><U+0441><U+0441><U+0430>: %d\n", prid, parentprid);
+      |                                                                ^
+
+verchik@alexandr-Aspire-Z5751:~/OS_25$ vim pr003.c
+verchik@alexandr-Aspire-Z5751:~/OS_25$ verchik@alexandr-Aspire-Z5751:~/OS_25$ vim pgcc pr003.c -o pr003.out
+verchik@alexandr-Aspire-Z5751:~/OS_25$ ./pr003.out
+Ид. текущего поцесса: 14490
+ид. родительского процесса: 11739
+
+Родительским процессом для запущенной программы является командная оболочка bash, поэтому ее id совпадает с id родительского процесса
+verchik@alexandr-Aspire-Z5751:~/OS_25$ ./pr003.out
+Ид. текущего поцесса: 14511
+ид. родительского процесса: 11739
+
+После второго запуска программы меняется id текущего процесс, так как предыдущий процесс уже завершился
+
