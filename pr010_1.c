@@ -13,13 +13,13 @@ int main() {
   char name[]="file.fifo";
 	
   if((fd = open(name, O_WRONLY)) <0) {
-			printf("Не удалось создать файл FIFO\n");
+			printf("Не удалось открыть FIFO на запись\n");
 			exit(-1);
 	}
   printf("Процесс-отправитель начинает запись в FIFO\n");
 	size = write(fd,"Текстовая строка для FIFO", BYTES);
 	if(size != BYTES) {
-			printf("Не удалось записать строку целиком\n");
+			printf("Не удалось записать строку целиком в FIFO\n");
 			exit(-1);
 		}
 		if(close(fd) < 0) {
