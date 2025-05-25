@@ -6,6 +6,7 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 #define BYTES 44
+
 int main() {
 	int fd;
 	size_t size;
